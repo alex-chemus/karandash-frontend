@@ -1,33 +1,22 @@
 import { ThemeConfig, theme } from "antd"
-import { MapToken, SeedToken } from "antd/es/theme/interface"
 import { makeAutoObservable } from "mobx"
+import getToken from "./getToken"
 
-type ColorMode = "dark" | "light"
-
-const lightAlgorith = (token: SeedToken): MapToken => {
-  return {
-    ...theme.defaultAlgorithm(token)
-  }
-}
-
-const darkAlgorithm = (token: SeedToken): MapToken => {
-  return {
-    ...theme.defaultAlgorithm(token)
-  }
-}
+export type ColorMode = "dark" | "light"
 
 class ThemeStore {
   colorMode: ColorMode = 'light'
-
-  theme: ThemeConfig = {
-    algorithm: this.colorMode === 'light' ? lightAlgorith : darkAlgorithm,
-    token: {
-      colorPrimary: 'red'
-    }
-  }
+  theme: ThemeConfig = {}
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  private refreshTheme() {
+    this.theme = {
+      algorithm: this.colorMode === 'light' ? theme.defaultAlgorithm : theme.darkAlgorithm,
+      token: getToken(this.colorMode)
+    }
   }
 
   init() {
@@ -38,12 +27,13 @@ class ThemeStore {
       localStorage.setItem('colorMode', 'light')
       this.colorMode = 'light'
     }
+    this.refreshTheme()
   }
 
   setTheme(colorMode: ColorMode) {
     localStorage.setItem('colorMode', colorMode)
     this.colorMode = colorMode
-    console.log('color mode', this.colorMode)
+    this.refreshTheme()
   }
 }
 

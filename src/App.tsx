@@ -1,10 +1,10 @@
 import { Route, Routes, useNavigate } from 'react-router-dom'
-import userStore from './stores/UserStore'
+import userStore from './stores/UserStore/UserStore'
 import Auth from './pages/Auth/Auth'
 import Notes from './pages/Notes/Notes'
 import { useEffect } from 'react'
 import { ConfigProvider } from 'antd'
-import themeStore from './stores/ThemeStore'
+import themeStore from './stores/ThemeStore/ThemeStore'
 import { observer } from 'mobx-react-lite'
 
 function AppComponent() {

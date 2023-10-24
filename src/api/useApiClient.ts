@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Api } from "./Api"
-import userStore from "../stores/UserStore";
+import userStore from "../stores/UserStore/UserStore";
 
 const apiHost = import.meta.env.VITE_API_HOST || 'http://localhost:500'
 
