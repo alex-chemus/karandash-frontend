@@ -1,25 +1,44 @@
-import { Button, Input, Space, Typography } from "antd";
-import { Link } from "react-router-dom";
-import themeStore from "../../stores/ThemeStore/ThemeStore";
+import { Button, Input, Space, Typography, Form } from "antd";
 import { observer } from "mobx-react-lite";
+import './Auth.scss'
 
-function AuthComponent() {
-  const onClick = () => {
-    if (themeStore.colorMode === 'light') themeStore.setTheme('dark')
-    else themeStore.setTheme('light')
+const { Title } = Typography
+
+type Props = {
+  authAction: 'login' | 'register'
+}
+
+const authNames = {
+  login: 'login',
+  password: 'password'
+} as const
+
+function AuthComponent(props: Props) {
+  const [form] = Form.useForm()
+
+  const onFinish = () => {
+    console.log(form.getFieldValue(authNames.login))
   }
 
   return (
-    <Space>
-      <nav>
-        <Link to="/">Auth</Link>
-        <Link to="/notes">Notes</Link>
-      </nav>
+    <Space className="auth-form">
+      <Form form={form} layout="vertical" onFinish={onFinish}>
+        <Title level={1}>
+          {props.authAction === 'login' ? 'Войти' : 'Регистрация'}
+        </Title>
 
-      <Button onClick={onClick}>switch theme</Button>
-      <Input />
+        <Form.Item name={authNames.login} label='Логин'>
+          <Input />
+        </Form.Item>
 
-      <Typography>test</Typography>
+        <Form.Item name={authNames.password} label='Пароль'>
+          <Input type="password" />
+        </Form.Item>
+
+        <Button type="primary" htmlType="submit">
+          {props.authAction === 'login' ? 'Войти' : 'Регистрация'}
+        </Button>
+      </Form>
     </Space>
   )
 }

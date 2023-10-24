@@ -18,8 +18,10 @@ function AppComponent() {
   return (
     <ConfigProvider theme={themeStore.theme}>
       <Routes>
-        <Route path='/' element={<Auth />} />
+        <Route path='/login' element={<Auth authAction='login' />} />
+        <Route path='/register' element={<Auth authAction='register' />} />
         <Route path='/notes' element={<Notes />} />
+        <Route path='/' element={<Auth authAction='login' />} />
       </Routes>
     </ConfigProvider>
   )
