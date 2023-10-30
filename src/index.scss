@@ -4,6 +4,16 @@
   --color-light-primary: white;
   --color-light-secondary: #EEEEEE;
   --color-accent: #FD7014;
+
+  --radius-lg: 8px;
+
+  --size-xxs: 4px;
+  --size-xs: 8px;
+  --size-sm: 12px;
+  --size-ms: 16px;
+  --size-lg: 24px;
+  --size-xl: 32px;
+  --size-xxl: 48px;
 }
 
 :root[data-theme="dark"] {
@@ -32,6 +42,14 @@
   height: 50px;
   width: 50px;
   border-radius: 100vmax;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-btn-icon-only {
+  width: 40px !important;
+  height: 40px !important;
   display: flex;
   align-items: center;
   justify-content: center;

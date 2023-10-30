@@ -5,9 +5,10 @@ import * as dayjs from 'dayjs'
 import { useEffect, useMemo, useState } from "react";
 import './NotesCalendar.scss'
 import { CalendarProps } from "antd/lib";
-import { IconNotesOff } from "@tabler/icons-react";
+import { IconNotesOff, IconPlus } from "@tabler/icons-react";
 import useModal from "../../../shared/components/Modal/useModal";
 import NoteViewModal from "./NoteViewModal/NoteViewModal";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography
 
@@ -35,6 +36,8 @@ const getRenderListItem = (onClick: (id: number) => void): ListProps<Note>['rend
 
 export default function NotesPage() {
   const api = useApiClient()
+
+  const navigate = useNavigate()
 
   const { modal, contextHolder } = useModal()
 
@@ -67,31 +70,34 @@ export default function NotesPage() {
   }
 
   return (
-    <div className="notes-calendar-wrapper">
-      <Calendar
-        mode="month"
-        value={value}
-        onChange={setValue}
-        cellRender={getCellRender(notes)}
-        onPanelChange={(date) => {
-          fillNotes(date.startOf('month'), date.endOf('month'))
-        }}
-        className="notes-calendar"
-      />
-      <Space direction="vertical" size="middle" className="notes-calendar-list">
-        <Title level={3}>Заметки за {value.format('DD.MM')}</Title>
-        {computedNotes.length ? (
-          <List
-            dataSource={computedNotes}
-            renderItem={getRenderListItem(openModal)}
-          />
-        ) : (
-          <div className="notes-calendar-list-placeholder">
-            <IconNotesOff style={{ alignSelf: 'center' }} size={40} />
-          </div>
-        )}
-      </Space>
-      {contextHolder}
-    </div>
+    <>
+      <Button icon={<IconPlus />} onClick={() => navigate('/notes/add')} />
+      <div className="notes-calendar-wrapper">
+        <Calendar
+          mode="month"
+          value={value}
+          onChange={setValue}
+          cellRender={getCellRender(notes)}
+          onPanelChange={(date) => {
+            fillNotes(date.startOf('month'), date.endOf('month'))
+          }}
+          className="notes-calendar"
+        />
+        <Space direction="vertical" size="middle" className="notes-calendar-list">
+          <Title level={3}>Заметки за {value.format('DD.MM')}</Title>
+          {computedNotes.length ? (
+            <List
+              dataSource={computedNotes}
+              renderItem={getRenderListItem(openModal)}
+            />
+          ) : (
+            <div className="notes-calendar-list-placeholder">
+              <IconNotesOff style={{ alignSelf: 'center' }} size={40} />
+            </div>
+          )}
+        </Space>
+        {contextHolder}
+      </div>
+    </>
   )
 }

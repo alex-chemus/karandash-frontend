@@ -41,7 +41,8 @@ export default function NoteViewModal({ id }: Props) {
 
         <Text>{note.text}</Text>
 
-        <Button onClick={editNote} className="note-view-modal__edit-button" icon={<IconPencil />} />
+        {/* todo */}
+        {/* <Button onClick={editNote} className="note-view-modal__edit-button" icon={<IconPencil />} /> */}
       </div>
     ) : (
       <Skeleton />

@@ -1,0 +1,15 @@
+.note-form {
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg-secondary);
+  padding: var(--size-xxl);
+  width: 800px;
+  margin: 0 auto;
+
+  &__title-input {
+    width: 400px;
+  }
+
+  &__title {
+    margin-bottom: var(--size-xl) !important;
+  }
+}
