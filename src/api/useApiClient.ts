@@ -26,7 +26,7 @@ export default function useApiClient() {
     } catch (e) {
       const err = e as any // eslint-disable-line @typescript-eslint/no-explicit-any
       if (err.status === 401) {
-        navigate('/')
+        navigate('/login')
       } else {
          alert(err.error.message) // change later
       }

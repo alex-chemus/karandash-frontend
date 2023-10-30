@@ -1,0 +1,39 @@
+.nav-sidebar-wrapper {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-gap: 40px;
+  padding: 20px;
+  padding-right: 50px;
+}
+
+.nav-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.nav-sidebar-button {
+  height: 50px;
+
+  &.ant-btn-default {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  &.ant-btn-default:hover {
+    border-color: transparent !important;
+  }
+
+  &.ant-btn-primary {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+  }
+
+  &.ant-btn-primary:hover {
+    color: var(--color-accent) !important;
+    background-color: var(--color-bg-secondary) !important;
+    // border: 1px solid var(--color-accent);
+  }
+}

@@ -17,6 +17,8 @@ class ThemeStore {
       algorithm: this.colorMode === 'light' ? theme.defaultAlgorithm : theme.darkAlgorithm,
       token: getToken(this.colorMode)
     }
+    const root = document.querySelector(':root') as HTMLElement
+    root.dataset.theme = this.colorMode
   }
 
   init() {

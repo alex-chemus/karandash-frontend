@@ -9,14 +9,12 @@ class UserStore {
 
   setToken(token: string) {
     this.token = token
+    localStorage.setItem('token', token)
   }
 
   async init() {
     const token = localStorage.getItem('token')
     if (token) this.token = token
-    else {
-      return Promise.reject()
-    }
   }
 }
 

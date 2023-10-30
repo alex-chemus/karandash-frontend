@@ -22,6 +22,14 @@ export interface UserCredsDto {
   password: string;
 }
 
+export interface TokenDto {
+  /**
+   * auth token
+   * @example "token"
+   */
+  token: string;
+}
+
 export interface CreateNoteDto {
   /**
    * Заголовок заметки
@@ -322,7 +330,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/auth/login
      */
     login: (data: UserCredsDto, params: RequestParams = {}) =>
-      this.request<string, any>({
+      this.request<TokenDto, any>({
         path: `/auth/login`,
         method: "POST",
         body: data,
@@ -340,7 +348,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/auth/register
      */
     register: (data: UserCredsDto, params: RequestParams = {}) =>
-      this.request<string, any>({
+      this.request<TokenDto, any>({
         path: `/auth/register`,
         method: "POST",
         body: data,

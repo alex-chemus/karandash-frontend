@@ -1,28 +1,27 @@
-import { Route, Routes, useNavigate } from 'react-router-dom'
-import userStore from './stores/UserStore/UserStore'
-import Auth from './pages/Auth/Auth'
-import Notes from './pages/Notes/Notes'
+import { Route, Routes } from 'react-router-dom'
+import AuthPage from './pages/Auth/AuthPage'
 import { useEffect } from 'react'
 import { ConfigProvider } from 'antd'
 import themeStore from './stores/ThemeStore/ThemeStore'
 import { observer } from 'mobx-react-lite'
+import MainPage from './pages/Main/MainPage'
+import ThemeSwitcherProvider from './pages/ThemeSwitcherProvider'
+import ru_RU from 'antd/lib/locale/ru_RU'
 
 function AppComponent() {
-  const navigate = useNavigate()
-
   useEffect(() => {
     themeStore.init()
-    userStore.init().catch(() => navigate('/'))
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <ConfigProvider theme={themeStore.theme}>
-      <Routes>
-        <Route path='/login' element={<Auth authAction='login' />} />
-        <Route path='/register' element={<Auth authAction='register' />} />
-        <Route path='/notes' element={<Notes />} />
-        <Route path='/' element={<Auth authAction='login' />} />
-      </Routes>
+    <ConfigProvider theme={themeStore.theme} locale={ru_RU}>
+      <ThemeSwitcherProvider>
+        <Routes>
+          <Route path='/login' element={<AuthPage authAction='login' />} />
+          <Route path='/register' element={<AuthPage authAction='register' />} />
+          <Route path='/*' element={<MainPage />} />
+        </Routes>
+      </ThemeSwitcherProvider>
     </ConfigProvider>
   )
 }

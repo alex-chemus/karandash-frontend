@@ -1,0 +1,38 @@
+:root {
+  --color-dark-primary: #1F2125;
+  --color-dark-secondary: #292D31;
+  --color-light-primary: white;
+  --color-light-secondary: #EEEEEE;
+  --color-accent: #FD7014;
+}
+
+:root[data-theme="dark"] {
+  --color-bg-primary: var(--color-dark-primary);
+  --color-bg-secondary: var(--color-dark-secondary);
+  --color-text-primary: var(--color-light-primary);
+  --color-text-secondary: var(--color-light-secondary);
+  background-color: var(--color-bg-primary);
+}
+
+:root[data-theme="light"] {
+  --color-bg-primary: var(--color-light-primary);
+  --color-bg-secondary: var(--color-light-secondary);
+  --color-text-primary: var(--color-dark-primary);
+  --color-text-secondary: var(--color-dark-secondary);
+}
+
+#root {
+  height: 100%;
+}
+
+.theme-switcher-button.ant-btn-icon-only {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  height: 50px;
+  width: 50px;
+  border-radius: 100vmax;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

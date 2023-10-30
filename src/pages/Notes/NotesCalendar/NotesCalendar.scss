@@ -1,0 +1,39 @@
+.notes-calendar-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 15px;
+}
+
+.notes-calendar {
+  .ant-picker-calendar-mode-switch {
+    display: none;
+  }
+
+  .ant-picker-calendar-header {
+    padding: 12px;
+  }
+}
+
+.notes-calendar-list {
+  background-color: var(--color-bg-secondary);
+  border-radius: 8px;
+  padding: 32px;
+  color: var(--color-text-primary);
+
+  &-placeholder {
+    display: flex;
+    justify-content: center;
+  }
+
+  &-item {
+    width: 100%;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  &-item:hover {
+    background-color: var(--color-bg-primary);
+  }
+}
