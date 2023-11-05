@@ -46,11 +46,6 @@ export interface CreateNoteDto {
    * @example "Текст"
    */
   text: string;
-  /**
-   * ID автора заметки
-   * @example "1"
-   */
-  userId: number;
 }
 
 export interface Note {
@@ -100,6 +95,162 @@ export interface GetNoteDto {
    * @example 1
    */
   id: number;
+}
+
+export interface AddSingularBudgetItemDto {
+  /**
+   * Сумма
+   * @example "1000"
+   */
+  sum: number;
+  /**
+   * Доход/расход
+   * @example "true"
+   */
+  isIncome: boolean;
+  /**
+   * Дата
+   * @example "YYYY-MM-DD"
+   */
+  date: string;
+  /**
+   * Название
+   * @example "Стипа)))"
+   */
+  name: string;
+}
+
+export interface SingularBudget {
+  /**
+   * ID записи
+   * @example "1"
+   */
+  id: number;
+  /**
+   * Сумма
+   * @example "1000"
+   */
+  sum: number;
+  /**
+   * Доход/расход
+   * @example "true"
+   */
+  isIncome: boolean;
+  /**
+   * Дата
+   * @example "1"
+   */
+  date: number;
+  /**
+   * Название
+   * @example "Стипа)))"
+   */
+  name: string;
+  /**
+   * ID пользователя
+   * @example "1"
+   */
+  userId: number;
+}
+
+export interface AddRegularBudgetItemDto {
+  /**
+   * Сумма
+   * @example "1000"
+   */
+  sum: number;
+  /**
+   * Доход/расход
+   * @example "true"
+   */
+  isIncome: boolean;
+  /**
+   * ID периода
+   * @example "1"
+   */
+  periodId: number;
+  /**
+   * Название
+   * @example "Стипа)))"
+   */
+  name: string;
+}
+
+export interface RegularBudget {
+  /**
+   * ID записи
+   * @example "1"
+   */
+  id: number;
+  /**
+   * Сумма
+   * @example "1000"
+   */
+  sum: number;
+  /**
+   * Доход/расход
+   * @example "true"
+   */
+  isIncome: boolean;
+  /**
+   * Название
+   * @example "Стипа)))"
+   */
+  name: string;
+  /**
+   * ID период
+   * @example "1"
+   */
+  periodId: number;
+  /**
+   * ID пользователя
+   * @example "1"
+   */
+  userId: number;
+}
+
+export interface GetYearSummaryDto {
+  /**
+   * Год
+   * @example 2023
+   */
+  year: number;
+}
+
+export interface MonthSummaryDto {
+  /**
+   * Месяц (1-12)
+   * @example "1"
+   */
+  month: number;
+  /**
+   * Доход
+   * @example "1000"
+   */
+  income: number;
+  /**
+   * Расход
+   * @example "1000"
+   */
+  expense: number;
+  /**
+   * Сальдо
+   * @example "1000"
+   */
+  diff: number;
+}
+
+export interface Period {
+  /**
+   * ID периода
+   * @example "1"
+   */
+  id: number;
+  /**
+   * Период
+   * @example "Месяц"
+   */
+  title: string;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -365,12 +516,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name CreateNote
      * @summary Создать заметку
      * @request POST:/notes/create-note
+     * @secure
      */
     createNote: (data: CreateNoteDto, params: RequestParams = {}) =>
       this.request<Note, any>({
         path: `/notes/create-note`,
         method: "POST",
         body: data,
+        secure: true,
         type: ContentType.Json,
         format: "json",
         ...params,
@@ -383,12 +536,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name GetNotesInDateRange
      * @summary Вывести заметки за указаный период
      * @request POST:/notes/get-notes-in-date-range
+     * @secure
      */
     getNotesInDateRange: (data: DateRangeDto, params: RequestParams = {}) =>
       this.request<Note[], any>({
         path: `/notes/get-notes-in-date-range`,
         method: "POST",
         body: data,
+        secure: true,
         type: ContentType.Json,
         format: "json",
         ...params,
@@ -401,13 +556,114 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name GetNoteById
      * @summary Вернуть заметку по ID
      * @request POST:/notes/get-note-by-id
+     * @secure
      */
     getNoteById: (data: GetNoteDto, params: RequestParams = {}) =>
       this.request<Note, any>({
         path: `/notes/get-note-by-id`,
         method: "POST",
         body: data,
+        secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+  };
+  budget = {
+    /**
+     * No description
+     *
+     * @tags Budget
+     * @name AddSingularBudgetItem
+     * @summary Добавить разовый доход/расход
+     * @request POST:/budget/add-singular-budget-item
+     * @secure
+     */
+    addSingularBudgetItem: (data: AddSingularBudgetItemDto, params: RequestParams = {}) =>
+      this.request<SingularBudget, any>({
+        path: `/budget/add-singular-budget-item`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Budget
+     * @name AddRegularBudgetItem
+     * @summary Добавить регулярный доход/расход
+     * @request POST:/budget/add-regular-budget-item
+     * @secure
+     */
+    addRegularBudgetItem: (data: AddRegularBudgetItemDto, params: RequestParams = {}) =>
+      this.request<RegularBudget, any>({
+        path: `/budget/add-regular-budget-item`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Budget
+     * @name GetAggregatedYearSummary
+     * @summary Итоговые данные за год с накоплением
+     * @request POST:/budget/get-aggregated-year-summary
+     * @secure
+     */
+    getAggregatedYearSummary: (data: GetYearSummaryDto, params: RequestParams = {}) =>
+      this.request<MonthSummaryDto[], any>({
+        path: `/budget/get-aggregated-year-summary`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Budget
+     * @name GetPlainYearSummary
+     * @summary Итоговые данные за год
+     * @request POST:/budget/get-plain-year-summary
+     * @secure
+     */
+    getPlainYearSummary: (data: GetYearSummaryDto, params: RequestParams = {}) =>
+      this.request<MonthSummaryDto[], any>({
+        path: `/budget/get-plain-year-summary`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Budget
+     * @name GetPeriods
+     * @summary Периоды регулярный операций
+     * @request GET:/budget/get-periods
+     * @secure
+     */
+    getPeriods: (params: RequestParams = {}) =>
+      this.request<Period[], any>({
+        path: `/budget/get-periods`,
+        method: "GET",
+        secure: true,
         format: "json",
         ...params,
       }),

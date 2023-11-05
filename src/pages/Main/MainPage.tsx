@@ -11,8 +11,8 @@ export default function MainPage() {
     <NavSidebar>
       <Routes>
         <Route path='/' element={<Navigate to='/notes' />} /> 
-        <Route path='/notes*' element={<NotesPage />} />
-        <Route path='/budget*' element={<BudgetPage />} />
+        <Route path='/notes/*' element={<NotesPage />} />
+        <Route path='/budget/*' element={<BudgetPage />} />
       </Routes>
     </NavSidebar>
   </ProtectedRoute>
