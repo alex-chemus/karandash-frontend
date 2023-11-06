@@ -253,6 +253,60 @@ export interface Period {
   title: string;
 }
 
+export interface AddGoalDto {
+  /**
+   * Название
+   * @example "На путешествие"
+   */
+  name: string;
+  /**
+   * Сумма
+   * @example "100000"
+   */
+  sum: number;
+  /**
+   * Год
+   * @example "2023"
+   */
+  year: number;
+}
+
+export interface Goal {
+  /**
+   * ID цели
+   * @example "1"
+   */
+  id: number;
+  /**
+   * Название
+   * @example "На путешествие"
+   */
+  name: string;
+  /**
+   * Сумма
+   * @example "100000"
+   */
+  sum: number;
+  /**
+   * Год
+   * @example "2023"
+   */
+  year: number;
+  /**
+   * ID пользователя
+   * @example 1
+   */
+  userId: number;
+}
+
+export interface YearDto {
+  /**
+   * Год
+   * @example "2023"
+   */
+  year: number;
+}
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -664,6 +718,47 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/budget/get-periods`,
         method: "GET",
         secure: true,
+        format: "json",
+        ...params,
+      }),
+  };
+  goals = {
+    /**
+     * No description
+     *
+     * @tags Goals
+     * @name AddGoal
+     * @summary Добавить цель
+     * @request POST:/goals/add-goal
+     * @secure
+     */
+    addGoal: (data: AddGoalDto, params: RequestParams = {}) =>
+      this.request<Goal, any>({
+        path: `/goals/add-goal`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Goals
+     * @name GetGoals
+     * @summary Показать цели
+     * @request POST:/goals/get-goals
+     * @secure
+     */
+    getGoals: (data: YearDto, params: RequestParams = {}) =>
+      this.request<Goal[], any>({
+        path: `/goals/get-goals`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),

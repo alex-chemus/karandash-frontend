@@ -4,6 +4,7 @@ import NotesPage from "../Notes/NotesPage";
 import BudgetPage from "../Budget/BudgetPage";
 import NavSidebar from "./NavSidebar/NavSidebar";
 import './MainPage.scss'
+import GoalsPage from "../Goals/GoalsPage";
 
 export default function MainPage() {
   return (
@@ -13,6 +14,7 @@ export default function MainPage() {
         <Route path='/' element={<Navigate to='/notes' />} /> 
         <Route path='/notes/*' element={<NotesPage />} />
         <Route path='/budget/*' element={<BudgetPage />} />
+        <Route path='/goals/*' element={<GoalsPage />} />
       </Routes>
     </NavSidebar>
   </ProtectedRoute>

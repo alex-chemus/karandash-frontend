@@ -1,4 +1,4 @@
-import { IconBusinessplan, IconNotes } from "@tabler/icons-react"
+import { IconBusinessplan, IconNotes, IconTargetArrow } from "@tabler/icons-react"
 import { Button, Space } from "antd"
 import { ReactNode, useMemo } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
@@ -32,6 +32,12 @@ export default function NavSidebar({ children }: Props) {
       title: 'Финансы',
       active: location.pathname === '/budget',
       linkTo: '/budget'
+    },
+    {
+      icon: <IconTargetArrow />,
+      title: 'Цели',
+      active: location.pathname === '/goals',
+      linkTo: '/goals'
     }
   ], [location])
 
