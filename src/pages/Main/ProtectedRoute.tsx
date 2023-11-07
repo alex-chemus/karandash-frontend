@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import userStore from "../../stores/UserStore/UserStore";
 import { useNavigate } from "react-router-dom";
 
@@ -9,10 +9,16 @@ type Props = {
 export default function ProtectedRoute({ children }: Props) {
   const navigate = useNavigate()
 
+  const [initializedStore, setInitializedStore] = useState(false)
+
   useEffect(() => {
     userStore.init()
-    if (!userStore.token) navigate('/login')
+      .then(() => {
+        setInitializedStore(true)
+        if (!userStore.token) throw new Error()
+      })
+      .catch(() => navigate('/login'))
   }, [userStore.token]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return children
+  return initializedStore ? children : null
 }
