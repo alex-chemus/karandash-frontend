@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { CartesianGrid, Line, XAxis, YAxis, ComposedChart, Area, Dot, Tooltip as RechartsTooltip } from "recharts";
+import { CartesianGrid, Line, XAxis, YAxis, ComposedChart, Area, Dot, Tooltip as RechartsTooltip, ResponsiveContainer } from "recharts";
 import useApiClient from "../../../api/useApiClient";
 import { Goal, MonthSummaryDto } from "../../../api/Api";
 import * as dayjs from 'dayjs'
@@ -71,30 +71,36 @@ export default function GoalsChart() {
       <Tooltip title="Добавить цель" placement="right">
         <Button icon={<IconPlus />} onClick={() => navigate('add')} />
       </Tooltip>
-      <ComposedChart width={1200} height={600} data={chartData}>
-        <CartesianGrid horizontal={false} />
-        <XAxis dataKey={'name'} />
-        <YAxis />
-        <RechartsTooltip />
-        {goals && goals.map(goal => {
-          return (
-            <Line
-              dataKey={goal.name}
-              stroke={themeStore.theme.token?.colorTextBase}
-              label={goal.name}
-              dot={props => getDot(props, goal.name)}
-            />
-          )
-        })}
-        {aggregatedBudget && (
-          <Area
-            dataKey={'Финансы'}
-            fill={themeStore.theme.token?.colorPrimary}
-            stroke={themeStore.theme.token?.colorPrimary}
-            dot={props => getDot(props, 'Финансы')}
+      <ResponsiveContainer height={600} width='80%' style={{ alignSelf: 'center' }}>
+        <ComposedChart data={chartData}>
+          <CartesianGrid horizontal={false} />
+          <XAxis dataKey={'name'} />
+          <YAxis />
+          <RechartsTooltip
+            contentStyle={{ backgroundColor: themeStore.theme.token?.colorBgElevated }}
+            itemStyle={{ color: themeStore.theme.token?.colorTextBase }}
+            labelStyle={{ color: themeStore.theme.token?.colorPrimary }}
           />
-        )}
-      </ComposedChart>
+          {goals && goals.map(goal => {
+            return (
+              <Line
+                dataKey={goal.name}
+                stroke={themeStore.theme.token?.colorTextBase}
+                label={goal.name}
+                dot={props => getDot(props, goal.name)}
+              />
+            )
+          })}
+          {aggregatedBudget && (
+            <Area
+              dataKey={'Финансы'}
+              fill={themeStore.theme.token?.colorPrimary}
+              stroke={themeStore.theme.token?.colorPrimary}
+              dot={props => getDot(props, 'Финансы')}
+            />
+          )}
+        </ComposedChart>
+      </ResponsiveContainer>
     </Flex>
   )
 }

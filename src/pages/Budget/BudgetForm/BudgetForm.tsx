@@ -2,6 +2,7 @@ import { Button, Checkbox, DatePicker, Form, FormProps, Input, InputNumber, Typo
 import useApiClient from "../../../api/useApiClient"
 import ComboBox from "../../../shared/components/ComboBox/ComboBox"
 import './BudgetForm.scss'
+import { validateMessages } from "../../../shared/helpers/form-helper"
 
 const budgetNames = {
   id: 'id',
@@ -56,6 +57,7 @@ export default function BudgetForm({ operation }: Props) {
       className="budget-form"
       onFinish={onFinish}
       initialValues={operation === 'singular' ? initialSingularValues : initialRegularValues}
+      validateMessages={validateMessages}
     >
       <Title level={2} className="note-form__title">
         Добавить {operation === 'singular' ? 'разовую' : 'регулярную'} операцию
@@ -69,7 +71,7 @@ export default function BudgetForm({ operation }: Props) {
         <Input />
       </Form.Item>
 
-      <Form.Item name={budgetNames.sum} label="Сумма" rules={[{ required: true }]}>
+      <Form.Item name={budgetNames.sum} label="Сумма" rules={[{ required: true }, { type: 'number' }]}>
         <InputNumber />
       </Form.Item>
 

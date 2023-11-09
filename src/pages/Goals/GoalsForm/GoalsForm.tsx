@@ -3,6 +3,7 @@ import useApiClient from "../../../api/useApiClient"
 import './GoalsForm.scss'
 import * as dayjs from 'dayjs'
 import { AddGoalDto } from "../../../api/Api"
+import { validateMessages } from "../../../shared/helpers/form-helper"
 
 const goalNames = {
   id: 'id',
@@ -37,6 +38,7 @@ export default function GoalsForm() {
       className="goals-form"
       onFinish={onFinish}
       initialValues={initialValues}
+      validateMessages={validateMessages}
     >
       <Title level={2} className="note-form__title">
         Добавить цель
@@ -50,11 +52,11 @@ export default function GoalsForm() {
         <Input />
       </Form.Item>
 
-      <Form.Item name={goalNames.sum} label="Сумма" rules={[{ required: true }]}>
+      <Form.Item name={goalNames.sum} label="Сумма" rules={[{ required: true }, { type: 'number' }]}>
         <InputNumber />
       </Form.Item>
 
-      <Form.Item name={goalNames.year} label="Год" rules={[{ required: true }]}>
+      <Form.Item name={goalNames.year} label="Год" rules={[{ required: true }, { type: 'number' }]}>
         <InputNumber />
       </Form.Item>
 

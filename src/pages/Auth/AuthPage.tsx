@@ -51,6 +51,11 @@ function AuthComponent(props: Props) {
     navigate('/')
   }
 
+  const changeAuthAction = () => {
+    if (props.authAction === 'login') navigate('/register')
+    else navigate('/login')
+  }
+
   return (
     <div className='auth-page'>
       <Form
@@ -83,9 +88,15 @@ function AuthComponent(props: Props) {
             <Input type="password" />
           </Form.Item>
 
-          <Button type="primary" htmlType="submit">
-            {props.authAction === 'login' ? 'Войти' : 'Регистрация'}
-          </Button>
+          <Space>
+            <Button type="primary" htmlType="submit">
+              {props.authAction === 'login' ? 'Войти' : 'Регистрация'}
+            </Button>
+
+            <Button onClick={changeAuthAction}>
+              {props.authAction === 'login' ? 'Регистрация' : 'Войти'}
+            </Button>
+          </Space>
         </Space>
       </Form>
     </div>

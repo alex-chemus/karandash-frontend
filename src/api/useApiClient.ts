@@ -1,12 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { Api } from "./Api"
 import userStore from "../stores/UserStore/UserStore";
+import { useContext } from "react";
+import { MessageContext } from "../App";
+import { MessageInstance } from "antd/es/message/interface";
 
 const apiHost = import.meta.env.VITE_API_HOST || 'http://localhost:500'
 
 export default function useApiClient() {
   const navigate = useNavigate()
   
+  const message = useContext(MessageContext) as MessageInstance
+
   const api = new Api({ baseUrl: apiHost })
 
   const oldRequest = api.request;
@@ -25,10 +30,11 @@ export default function useApiClient() {
       return await oldRequest(params)
     } catch (e) {
       const err = e as any // eslint-disable-line @typescript-eslint/no-explicit-any
+
+      message.error(err.error.message)
+
       if (err.status === 401) {
         navigate('/login')
-      } else {
-         alert(err.error.message) // change later
       }
       throw err
     }
