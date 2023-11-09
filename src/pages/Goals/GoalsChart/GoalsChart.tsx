@@ -4,7 +4,7 @@ import useApiClient from "../../../api/useApiClient";
 import { Goal, MonthSummaryDto } from "../../../api/Api";
 import * as dayjs from 'dayjs'
 import { Button, Flex, Tooltip } from "antd";
-import Sizes from "../../../shared/enums/Sizes";
+import Sizes from "../../../shared/helpers/Sizes";
 import { IconPlus } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import themeStore from "../../../stores/ThemeStore/ThemeStore";

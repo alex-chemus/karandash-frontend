@@ -17,6 +17,7 @@
     "dayjs": "^1.11.10",
     "mobx": "^6.10.2",
     "mobx-react-lite": "^4.0.5",
+    "rc-field-form": "^1.40.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",

@@ -8,7 +8,7 @@ import * as dayjs from 'dayjs'
 import { budgetTableColumns } from "./BudgetTableColumns"
 import SectionSkeleton from "../../../shared/components/SectionSkeleton/SectionSkeleton"
 import './BudgetTable.scss'
-import Sizes from "../../../shared/enums/Sizes"
+import Sizes from "../../../shared/helpers/Sizes"
 import { useNavigate } from "react-router-dom"
 
 export default function BudgetTable() {
