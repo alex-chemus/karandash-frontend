@@ -3,6 +3,7 @@ import useApiClient from "../../../api/useApiClient";
 import { CreateNoteDto } from "../../../api/Api";
 import './NoteForm.scss'
 import { validateMessages } from "../../../shared/helpers/form-helper";
+import useMessage from "../../../shared/hoos/useMessage";
 
 const { TextArea } = Input
 
@@ -22,11 +23,15 @@ const noteNames = {
 export default function NoteForm({ mode }: Props) {
   const api = useApiClient()
 
+  const message = useMessage()
+
   const [form] = Form.useForm()
 
   const onFinish: FormProps['onFinish'] = async (values: CreateNoteDto) => {
     if (mode === 'add') {
       await api.notes.createNote(values)
+      form.resetFields()
+      message.success('Заметка добавлена')
     }
   }
 

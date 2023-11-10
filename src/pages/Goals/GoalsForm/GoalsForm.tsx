@@ -4,6 +4,7 @@ import './GoalsForm.scss'
 import * as dayjs from 'dayjs'
 import { AddGoalDto } from "../../../api/Api"
 import { validateMessages } from "../../../shared/helpers/form-helper"
+import useMessage from "../../../shared/hoos/useMessage"
 
 const goalNames = {
   id: 'id',
@@ -23,12 +24,15 @@ const { Title } = Typography
 export default function GoalsForm() {
   const api = useApiClient()
 
+  const message = useMessage()
+
   const [form] = Form.useForm()
 
   const onFinish: FormProps['onFinish'] = async (values: AddGoalDto) => {
     await api.goals.addGoal(values)
 
     form.resetFields()
+    message.success('Цель добавлена')
   }
 
   return (

@@ -1,4 +1,6 @@
 .action-buttons {
+  background-color: var(--color-bg-secondary);
+
   &__content-wrapper {
     display: flex;
     flex-direction: column;

@@ -25,7 +25,7 @@ const getContent = (actions: Action[]) => (
 
 export default function ActionButtons({ actions, children, ...tooltipProps }: Props) {
   return (
-    <Popover {...tooltipProps} trigger={'click'} content={() => getContent(actions)}>
+    <Popover {...tooltipProps} trigger={'click'} content={() => getContent(actions)} className={"action-buttons"}>
       {children}
     </Popover>
   )

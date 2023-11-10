@@ -3,6 +3,7 @@ import useApiClient from "../../../api/useApiClient"
 import ComboBox from "../../../shared/components/ComboBox/ComboBox"
 import './BudgetForm.scss'
 import { validateMessages } from "../../../shared/helpers/form-helper"
+import useMessage from "../../../shared/hoos/useMessage"
 
 const budgetNames = {
   id: 'id',
@@ -38,6 +39,8 @@ type Props = {
 export default function BudgetForm({ operation }: Props) {
   const api = useApiClient()
 
+  const message = useMessage()
+
   const [form] = Form.useForm()
 
   const onFinish: FormProps['onFinish'] = (values) => {
@@ -48,6 +51,7 @@ export default function BudgetForm({ operation }: Props) {
     }
 
     form.resetFields()
+    message.success('Операция добавлена')
   }
 
   return (
