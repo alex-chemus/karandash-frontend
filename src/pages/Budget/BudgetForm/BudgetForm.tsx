@@ -45,9 +45,9 @@ export default function BudgetForm({ operation }: Props) {
 
   const onFinish: FormProps['onFinish'] = (values) => {
     if (operation === 'singular') {
-      api.budget.addSingularBudgetItem({ ...values, date: values.date.format('YYYY-MM-DD') })
+      api.financialOperations.addSingularFinancialOperation({ ...values, date: values.date.format('YYYY-MM-DD') })
     } else {
-      api.budget.addRegularBudgetItem(values)
+      api.financialOperations.addRegularFinancialOperation(values)
     }
 
     form.resetFields()
@@ -94,7 +94,7 @@ export default function BudgetForm({ operation }: Props) {
 
       {operation === 'regular' && (
         <Form.Item name={budgetNames.periodId} label="Период" rules={[{ required: true }]}>
-          <ComboBox dataSource={api.budget.getPeriods} />
+          <ComboBox dataSource={api.financialOperations.getPeriods} />
         </Form.Item>
       )}
 

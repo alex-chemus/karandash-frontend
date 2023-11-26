@@ -39,7 +39,7 @@ export default function GoalsChart() {
     api.goals.getGoals({ year })
       .then(res => setGoals(res.data))
 
-    api.budget.getAggregatedYearSummary({ year })
+    api.financialOperations.getAggregatedYearSummary({ year })
       .then(res => setAggregatedBudget(res.data))
     }, []) //eslint-disable-line react-hooks/exhaustive-deps
 

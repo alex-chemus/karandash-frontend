@@ -36,7 +36,7 @@ export default function BudgetTable() {
   const [dataSource, setDataSource] = useState<MonthSummaryDto[] | null>(null)
 
   useEffect(() => {
-    api.budget.getPlainYearSummary({ year: dayjs().year() })
+    api.financialOperations.getPlainYearSummary({ year: dayjs().year() })
       .then(res => setDataSource(res.data))
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 

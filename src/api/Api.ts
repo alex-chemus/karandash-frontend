@@ -97,7 +97,7 @@ export interface GetNoteDto {
   id: number;
 }
 
-export interface AddSingularBudgetItemDto {
+export interface AddSingularFinancialOperationDto {
   /**
    * Сумма
    * @example "1000"
@@ -120,7 +120,7 @@ export interface AddSingularBudgetItemDto {
   name: string;
 }
 
-export interface SingularBudget {
+export interface SingularFinancialOperation {
   /**
    * ID записи
    * @example "1"
@@ -153,7 +153,7 @@ export interface SingularBudget {
   userId: number;
 }
 
-export interface AddRegularBudgetItemDto {
+export interface AddRegularFinancialOperationDto {
   /**
    * Сумма
    * @example "1000"
@@ -176,7 +176,7 @@ export interface AddRegularBudgetItemDto {
   name: string;
 }
 
-export interface RegularBudget {
+export interface RegularFinancialOperation {
   /**
    * ID записи
    * @example "1"
@@ -623,19 +623,19 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
-  budget = {
+  financialOperations = {
     /**
      * No description
      *
-     * @tags Budget
-     * @name AddSingularBudgetItem
+     * @tags Financial operations
+     * @name AddSingularFinancialOperation
      * @summary Добавить разовый доход/расход
-     * @request POST:/budget/add-singular-budget-item
+     * @request POST:/financial-operations/add-singular-financial-operation
      * @secure
      */
-    addSingularBudgetItem: (data: AddSingularBudgetItemDto, params: RequestParams = {}) =>
-      this.request<SingularBudget, any>({
-        path: `/budget/add-singular-budget-item`,
+    addSingularFinancialOperation: (data: AddSingularFinancialOperationDto, params: RequestParams = {}) =>
+      this.request<SingularFinancialOperation, any>({
+        path: `/financial-operations/add-singular-financial-operation`,
         method: "POST",
         body: data,
         secure: true,
@@ -647,15 +647,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags Budget
-     * @name AddRegularBudgetItem
+     * @tags Financial operations
+     * @name AddRegularFinancialOperation
      * @summary Добавить регулярный доход/расход
-     * @request POST:/budget/add-regular-budget-item
+     * @request POST:/financial-operations/add-regular-financial-operation
      * @secure
      */
-    addRegularBudgetItem: (data: AddRegularBudgetItemDto, params: RequestParams = {}) =>
-      this.request<RegularBudget, any>({
-        path: `/budget/add-regular-budget-item`,
+    addRegularFinancialOperation: (data: AddRegularFinancialOperationDto, params: RequestParams = {}) =>
+      this.request<RegularFinancialOperation, any>({
+        path: `/financial-operations/add-regular-financial-operation`,
         method: "POST",
         body: data,
         secure: true,
@@ -667,15 +667,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags Budget
+     * @tags Financial operations
      * @name GetAggregatedYearSummary
      * @summary Итоговые данные за год с накоплением
-     * @request POST:/budget/get-aggregated-year-summary
+     * @request POST:/financial-operations/get-aggregated-year-summary
      * @secure
      */
     getAggregatedYearSummary: (data: GetYearSummaryDto, params: RequestParams = {}) =>
       this.request<MonthSummaryDto[], any>({
-        path: `/budget/get-aggregated-year-summary`,
+        path: `/financial-operations/get-aggregated-year-summary`,
         method: "POST",
         body: data,
         secure: true,
@@ -687,15 +687,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags Budget
+     * @tags Financial operations
      * @name GetPlainYearSummary
      * @summary Итоговые данные за год
-     * @request POST:/budget/get-plain-year-summary
+     * @request POST:/financial-operations/get-plain-year-summary
      * @secure
      */
     getPlainYearSummary: (data: GetYearSummaryDto, params: RequestParams = {}) =>
       this.request<MonthSummaryDto[], any>({
-        path: `/budget/get-plain-year-summary`,
+        path: `/financial-operations/get-plain-year-summary`,
         method: "POST",
         body: data,
         secure: true,
@@ -707,15 +707,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags Budget
+     * @tags Financial operations
      * @name GetPeriods
      * @summary Периоды регулярный операций
-     * @request GET:/budget/get-periods
+     * @request GET:/financial-operations/get-periods
      * @secure
      */
     getPeriods: (params: RequestParams = {}) =>
       this.request<Period[], any>({
-        path: `/budget/get-periods`,
+        path: `/financial-operations/get-periods`,
         method: "GET",
         secure: true,
         format: "json",
