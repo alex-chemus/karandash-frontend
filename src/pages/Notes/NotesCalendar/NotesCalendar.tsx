@@ -6,8 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 import './NotesCalendar.scss'
 import { CalendarProps } from "antd/lib";
 import { IconChevronRight, IconNotesOff, IconPlus } from "@tabler/icons-react";
-import useModal from "../../../shared/components/Modal/useModal";
-import NoteViewModal from "./NoteViewModal/NoteViewModal";
 import { useNavigate } from "react-router-dom";
 
 const { Title, Text, Paragraph } = Typography
@@ -33,8 +31,6 @@ export default function NotesPage() {
 
   const navigate = useNavigate()
 
-  const { modal, contextHolder } = useModal()
-
   const [value, setValue] = useState<dayjs.Dayjs>(dayjs())
   
   const [notes, setNotes] = useState<Note[] | null>(null)
@@ -57,10 +53,8 @@ export default function NotesPage() {
       : []
   }, [notes, value])
 
-  const openModal = (id: number) => {
-    modal({
-      content: <NoteViewModal id={id} />
-    })
+  const openNote = (id: number) => {
+    navigate(`./view/${id}`)
   }
 
   return (
@@ -95,7 +89,7 @@ export default function NotesPage() {
                   <Button
                     icon={<IconChevronRight />}
                     className="notes-calendar-page__show-note-button"
-                    onClick={() => openModal(note.id)}
+                    onClick={() => openNote(note.id)}
                   />
                 </Panel>
               ))}
@@ -106,7 +100,6 @@ export default function NotesPage() {
             </div>
           )}
         </Space>
-        {contextHolder}
       </div>
     </>
   )

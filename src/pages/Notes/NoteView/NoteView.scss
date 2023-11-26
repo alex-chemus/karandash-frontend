@@ -1,13 +1,9 @@
-.note-form {
+.note-view {
   border-radius: var(--radius-lg);
   background-color: var(--color-bg-secondary);
   padding: var(--size-xxl);
   width: 800px;
   margin: 40px auto 0;
-
-  &__title-input {
-    width: 400px;
-  }
 
   &__title {
     margin-bottom: var(--size-xl) !important;
