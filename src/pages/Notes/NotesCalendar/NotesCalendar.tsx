@@ -1,16 +1,18 @@
 import { Note } from "../../../api/Api";
 import useApiClient from "../../../api/useApiClient";
-import { Badge, Button, Calendar, List, ListProps, Space, Typography } from "antd";
+import { Badge, Button, Calendar, Collapse, Space, Typography } from "antd";
 import * as dayjs from 'dayjs'
 import { useEffect, useMemo, useState } from "react";
 import './NotesCalendar.scss'
 import { CalendarProps } from "antd/lib";
-import { IconNotesOff, IconPlus } from "@tabler/icons-react";
+import { IconChevronRight, IconNotesOff, IconPlus } from "@tabler/icons-react";
 import useModal from "../../../shared/components/Modal/useModal";
 import NoteViewModal from "./NoteViewModal/NoteViewModal";
 import { useNavigate } from "react-router-dom";
 
-const { Title } = Typography
+const { Title, Text, Paragraph } = Typography
+
+const { Panel } = Collapse
 
 function getCellRender(notes: Note[] | null): CalendarProps<dayjs.Dayjs>['cellRender'] {  
   return (current) => {
@@ -24,14 +26,6 @@ function getCellRender(notes: Note[] | null): CalendarProps<dayjs.Dayjs>['cellRe
       ? <Badge count={notesCount} color='#FD7014' />
       : null
   }
-}
-
-const getRenderListItem = (onClick: (id: number) => void): ListProps<Note>['renderItem'] => {
-  return (note) => (
-    <Button className="notes-calendar-list-item" onClick={() => onClick(note.id)}>
-      <span>{note.title}</span>
-    </Button>
-  )
 }
 
 export default function NotesPage() {
@@ -72,7 +66,7 @@ export default function NotesPage() {
   return (
     <>
       <Button icon={<IconPlus />} onClick={() => navigate('/notes/add')} />
-      <div className="notes-calendar-wrapper">
+      <div className="notes-calendar-page">
         <Calendar
           mode="month"
           value={value}
@@ -81,17 +75,33 @@ export default function NotesPage() {
           onPanelChange={(date) => {
             fillNotes(date.startOf('month'), date.endOf('month'))
           }}
-          className="notes-calendar"
+          className="notes-calendar-page__calendar"
         />
-        <Space direction="vertical" size="middle" className="notes-calendar-list">
+        <Space direction="vertical" size="middle" className="notes-calendar-page__sidebar">
           <Title level={3}>Заметки за {value.format('DD.MM')}</Title>
           {computedNotes.length ? (
-            <List
-              dataSource={computedNotes}
-              renderItem={getRenderListItem(openModal)}
-            />
+            <Collapse bordered={false} accordion className="notes-calendar-page__collapse">
+              {computedNotes.map((note, index) => (
+                <Panel
+                  key={index}
+                  header={note.title}
+                  className="notes-calendar-page__note-item"
+                >
+                  <Space direction="vertical">
+                    <Text italic>{note.date}</Text>
+                    <Paragraph ellipsis={{ rows: 3 }} style={{ marginBottom: 0 }}>{note.text}</Paragraph>
+                  </Space>
+
+                  <Button
+                    icon={<IconChevronRight />}
+                    className="notes-calendar-page__show-note-button"
+                    onClick={() => openModal(note.id)}
+                  />
+                </Panel>
+              ))}
+            </Collapse>
           ) : (
-            <div className="notes-calendar-list-placeholder">
+            <div className="notes-calendar-page__sidebar-placeholder">
               <IconNotesOff style={{ alignSelf: 'center' }} size={40} />
             </div>
           )}

@@ -1,39 +1,84 @@
-.notes-calendar-wrapper {
+.notes-calendar-page {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 1fr 400px;
   gap: 15px;
+
+  &__calendar {
+    .ant-picker-calendar-mode-switch {
+      display: none;
+    }
+  
+    .ant-picker-calendar-header {
+      padding: 12px;
+    }
+  }
 }
 
-.notes-calendar {
-  .ant-picker-calendar-mode-switch {
-    display: none;
-  }
-
-  .ant-picker-calendar-header {
-    padding: 12px;
-  }
-}
-
-.notes-calendar-list {
+.notes-calendar-page__sidebar {
   background-color: var(--color-bg-secondary);
   border-radius: 8px;
   padding: 32px;
   color: var(--color-text-primary);
+}
 
-  &-placeholder {
-    display: flex;
-    justify-content: center;
+.notes-calendar-page__sidebar-placeholder {
+  display: flex;
+  justify-content: center;
+}
+
+.notes-calendar-page__collapse {
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-xs);
+}
+
+.notes-calendar-page__note-item {
+  border-bottom: none !important;
+
+  .ant-collapse-header {
+    border-radius: var(--radius-lg) !important;
+    font-weight: 500;
+    // border: 1px solid var(--color-dark-primary);
+    box-shadow: 0 0 3px 0 rgba(0 0 0 / .25);
   }
 
-  &-item {
-    width: 100%;
-    text-align: left;
-    background-color: transparent;
-    border: none;
+  .ant-collapse-header:is(:hover, :active) {
+    background-color: var(--color-bg-primary);
+  }
+
+  .ant-collapse-expand-icon {
+    display: none !important;
+  }
+
+  .ant-collapse-content-box {
+    padding-top: var(--size-lg) !important;
+    margin-top: calc(var(--size-xs) * -1);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    border: 2px solid var(--color-bg-primary);
+    border-top: none;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--size-xs);
+    background-color: var(--color-bg-primary);
+  }
+}
+
+.notes-calendar-page__note-item.ant-collapse-item-active {
+  .ant-collapse-header {
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-bg-secondary);
+    color: var(--color-accent);
     box-shadow: none;
   }
+}
 
-  &-item:hover {
+.notes-calendar-page__show-note-button {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+
+  &:is(:hover, :focus, :active) {
     background-color: var(--color-bg-primary);
   }
 }
