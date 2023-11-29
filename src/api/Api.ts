@@ -89,7 +89,7 @@ export interface DateRangeDto {
   end: string;
 }
 
-export interface GetNoteDto {
+export interface NoteIdDto {
   /**
    * ID заметки
    * @example 1
@@ -612,7 +612,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/notes/get-note-by-id
      * @secure
      */
-    getNoteById: (data: GetNoteDto, params: RequestParams = {}) =>
+    getNoteById: (data: NoteIdDto, params: RequestParams = {}) =>
       this.request<Note, any>({
         path: `/notes/get-note-by-id`,
         method: "POST",
@@ -620,6 +620,25 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         secure: true,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Notes
+     * @name DeleteNoteById
+     * @summary Удалить заметку по ID
+     * @request POST:/notes/delete-note-by-id
+     * @secure
+     */
+    deleteNoteById: (data: NoteIdDto, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/notes/delete-note-by-id`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         ...params,
       }),
   };

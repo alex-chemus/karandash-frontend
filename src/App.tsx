@@ -12,7 +12,7 @@ import { MessageInstance } from 'antd/es/message/interface'
 export const MessageContext = createContext<MessageInstance | null>(null)
 
 function AppComponent() {
-  const [messageApi, contextPlaceholder] = message.useMessage()
+  const [messageApi, messageContextPlaceholder] = message.useMessage()
 
   useEffect(() => {
     themeStore.init()
@@ -22,7 +22,7 @@ function AppComponent() {
     <ConfigProvider theme={themeStore.theme} locale={ru_RU}>
       <MessageContext.Provider value={messageApi}>
         <ThemeSwitcherProvider>
-          {contextPlaceholder}
+          {messageContextPlaceholder}
           <Routes>
             <Route path='/login' element={<AuthPage authAction='login' />} />
             <Route path='/register' element={<AuthPage authAction='register' />} />
