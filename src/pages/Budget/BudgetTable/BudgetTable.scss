@@ -1,6 +1,45 @@
-.budget-table {
+.budget-table-page {
   &__table-wrapper {
     width: 70%;
     margin: 0 auto;
+  }
+
+  &__expand-button {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    animation: none;
+  }
+
+  &__expand-button:is(:hover, :focus) {
+    background-color: transparent !important;
+    box-shadow: none;
+  }
+
+  &__list-tree-button {
+    color: var(--color-accent);
+  }
+
+  &__list-tree-button:is(:hover, :focus) {
+    background-color: transparent !important;
+    color: var(--color-accent) !important;
+  }
+}
+
+.budget-table-page__table {
+  .ant-table-row-level-0 {
+    cursor: pointer;
+  }
+
+  .ant-table-expanded-row {
+    color: var(--accent);
+  }
+
+  .ant-table-expanded-row > .ant-table-cell {
+    background: transparent;
+  }
+
+  .ant-table-expanded-row > .ant-table-cell:hover {
+    background: transparent;
   }
 }

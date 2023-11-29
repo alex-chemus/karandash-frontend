@@ -1,0 +1,22 @@
+.month-operations-table {
+  .ant-table-cell {
+    border-radius: 0 !important;
+    background-color: transparent !important;
+  }
+
+  .ant-table-cell::before {
+    display: none;
+  }
+
+  .ant-table-thead .ant-table-cell {
+    color: var(--color-accent);
+  }
+
+  &__income-checkbox .ant-checkbox-inner {
+    border: 1px solid var(--color-accent);
+  }
+
+  &__skeleton li {
+    width: 100% !important;
+  }
+}

@@ -253,6 +253,47 @@ export interface Period {
   title: string;
 }
 
+export interface GetMonthOperations {
+  /**
+   * Год
+   * @example "2023"
+   */
+  year: number;
+  /**
+   * Месяц (1-12)
+   * @example "1"
+   */
+  month: number;
+}
+
+export interface OperationsListItem {
+  /**
+   * id
+   * @example "1"
+   */
+  id: number;
+  /**
+   * Доход/расход
+   * @example true
+   */
+  isIncome: boolean;
+  /**
+   * Сумма
+   * @example "1000"
+   */
+  sum: number;
+  /**
+   * Название
+   * @example "Название"
+   */
+  name: string;
+  /**
+   * Тип операции
+   * @example "Тип операции"
+   */
+  operationType: string;
+}
+
 export interface AddGoalDto {
   /**
    * Название
@@ -737,6 +778,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/financial-operations/get-periods`,
         method: "GET",
         secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Financial operations
+     * @name GetAllOperationsInMonth
+     * @summary Все фин. операции за указанный месяц
+     * @request POST:/financial-operations/get-operations-in-month
+     * @secure
+     */
+    getAllOperationsInMonth: (data: GetMonthOperations, params: RequestParams = {}) =>
+      this.request<OperationsListItem[], any>({
+        path: `/financial-operations/get-operations-in-month`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),

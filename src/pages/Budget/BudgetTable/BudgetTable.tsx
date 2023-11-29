@@ -1,6 +1,6 @@
 import { Button, Flex, Table } from "antd"
 import ActionButtons, { Action } from "../../../shared/components/ActionButtons/ActionButtons"
-import { IconPlus } from "@tabler/icons-react"
+import { IconListTree, IconPlus } from "@tabler/icons-react"
 import { useEffect, useMemo, useState } from "react"
 import { MonthSummaryDto } from "../../../api/Api"
 import useApiClient from "../../../api/useApiClient"
@@ -10,6 +10,7 @@ import SectionSkeleton from "../../../shared/components/SectionSkeleton/SectionS
 import './BudgetTable.scss'
 import Sizes from "../../../shared/helpers/Sizes"
 import { useNavigate } from "react-router-dom"
+import getMonthOperationsTable from "./MonthOperationsTable/MonthOperationsTable"
 
 export default function BudgetTable() {
   const api = useApiClient()
@@ -46,9 +47,28 @@ export default function BudgetTable() {
         <Button icon={<IconPlus />} />
       </ActionButtons>
 
-      <div className="budget-table__table-wrapper">
+      <div className="budget-table-page__table-wrapper">
         {dataSource ? (
-          <Table dataSource={dataSource} columns={budgetTableColumns} pagination={false} />
+          <Table
+            className="budget-table-page__table"
+            dataSource={dataSource.map(item => ({ ...item, key: item.month }))}
+            columns={budgetTableColumns}
+            pagination={false}
+            expandable={{
+              expandedRowRender: getMonthOperationsTable,
+              expandRowByClick: true,
+              expandIcon: (record) => {
+                return record.expanded ? (
+                  <Button
+                    className="budget-table-page__list-tree-button"
+                    type="text"
+                    icon={<IconListTree />}
+                    onClick={(e) => record.onExpand(record.record, e)}
+                  />
+                ) : null
+              }
+            }}
+          />
         ) : (
           <SectionSkeleton />
         )}
