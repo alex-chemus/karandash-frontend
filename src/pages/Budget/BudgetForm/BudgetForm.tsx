@@ -2,7 +2,7 @@ import { Button, Checkbox, DatePicker, Form, FormProps, Input, InputNumber, Typo
 import useApiClient from "../../../api/useApiClient"
 import ComboBox from "../../../shared/components/ComboBox/ComboBox"
 import './BudgetForm.scss'
-import { validateMessages } from "../../../shared/helpers/form-helper"
+import { validateMessages } from "../../../shared/helpers/form-helpers"
 import useMessage from "../../../shared/hoos/useMessage"
 
 const budgetNames = {

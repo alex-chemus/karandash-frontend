@@ -97,6 +97,29 @@ export interface NoteIdDto {
   id: number;
 }
 
+export interface EditNoteDto {
+  /**
+   * ID заметки
+   * @example "1"
+   */
+  id: number;
+  /**
+   * Заголовок заметки
+   * @example "Заголовок"
+   */
+  title: string;
+  /**
+   * Дата заметки
+   * @example "yyyy-MM-dd"
+   */
+  date: string;
+  /**
+   * Текст заметки
+   * @example "Текст"
+   */
+  text: string;
+}
+
 export interface AddSingularFinancialOperationDto {
   /**
    * Сумма
@@ -680,6 +703,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         secure: true,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Notes
+     * @name EditNote
+     * @summary Редактировать заметку
+     * @request POST:/notes/edit-note
+     * @secure
+     */
+    editNote: (data: EditNoteDto, params: RequestParams = {}) =>
+      this.request<Note, any>({
+        path: `/notes/edit-note`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
         ...params,
       }),
   };

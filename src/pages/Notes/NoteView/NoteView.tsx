@@ -25,7 +25,7 @@ export default function NoteView() {
   const [note, setNote] = useState<Note | null>(null)
 
   const editNote = () => {
-    /* todo */
+    navigate(`/notes/edit/${id}`)
   }
 
   const deleteNote = () => {

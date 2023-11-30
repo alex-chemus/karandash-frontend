@@ -9,7 +9,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 import themeStore from "../../../stores/ThemeStore/ThemeStore";
 import './GoalsChart.scss'
-import { months } from "../../../shared/helpers/months-helper";
+import { months } from "../../../shared/helpers/months-helpers";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getDot = (props: any, title: string) => {

@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { MonthSummaryDto } from "../../../api/Api"
-import { getMonthByNumber } from "../../../shared/helpers/months-helper"
+import { getMonthByNumber } from "../../../shared/helpers/months-helpers"
 
 type BudgetTableColumn = {
   dataIndex: keyof MonthSummaryDto,

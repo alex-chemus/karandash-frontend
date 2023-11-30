@@ -3,7 +3,7 @@ import useApiClient from "../../../api/useApiClient"
 import './GoalsForm.scss'
 import * as dayjs from 'dayjs'
 import { AddGoalDto } from "../../../api/Api"
-import { validateMessages } from "../../../shared/helpers/form-helper"
+import { validateMessages } from "../../../shared/helpers/form-helpers"
 import useMessage from "../../../shared/hoos/useMessage"
 
 const goalNames = {
