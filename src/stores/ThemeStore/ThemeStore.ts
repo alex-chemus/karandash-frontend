@@ -12,13 +12,14 @@ class ThemeStore {
     makeAutoObservable(this)
   }
 
-  private refreshTheme() {
+  private refreshInnerTheme() {
     this.theme = {
       algorithm: this.colorMode === 'light' ? theme.defaultAlgorithm : theme.darkAlgorithm,
       token: getToken(this.colorMode)
     }
     const root = document.querySelector(':root') as HTMLElement
     root.dataset.theme = this.colorMode
+    root.style.colorScheme = this.colorMode
   }
 
   init() {
@@ -29,13 +30,13 @@ class ThemeStore {
       localStorage.setItem('colorMode', 'light')
       this.colorMode = 'light'
     }
-    this.refreshTheme()
+    this.refreshInnerTheme()
   }
 
   setTheme(colorMode: ColorMode) {
     localStorage.setItem('colorMode', colorMode)
     this.colorMode = colorMode
-    this.refreshTheme()
+    this.refreshInnerTheme()
   }
 }
 
