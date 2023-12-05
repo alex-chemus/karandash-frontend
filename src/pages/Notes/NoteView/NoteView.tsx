@@ -1,7 +1,7 @@
-import { Button, Flex, Skeleton, Tooltip, Typography } from "antd"
+import { Button, Checkbox, Flex, Skeleton, Table, TableProps, Tooltip, Typography } from "antd"
 import useApiClient from "../../../api/useApiClient"
-import { useEffect, useState } from "react"
-import { Note } from "../../../api/Api"
+import { useEffect, useMemo, useState } from "react"
+import { NoteViewDto, SingularFinancialOperation } from "../../../api/Api"
 import * as dayjs from 'dayjs'
 import { useNavigate, useParams } from "react-router-dom"
 import './NoteView.scss'
@@ -22,7 +22,7 @@ export default function NoteView() {
 
   const { modal, contextHolder } = useModal()
 
-  const [note, setNote] = useState<Note | null>(null)
+  const [note, setNote] = useState<NoteViewDto | null>(null)
 
   const editNote = () => {
     navigate(`/notes/edit/${id}`)
@@ -41,9 +41,36 @@ export default function NoteView() {
   }
 
   useEffect(() => {
-    if (id) api.notes.getNoteById({ id: +id })
+    if (id) api.notes.viewNote({ id: +id })
       .then(res => setNote(res.data))
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const columns = useMemo<TableProps<SingularFinancialOperation>['columns']>(() => {
+    return [
+      {
+        key: 'name',
+        dataIndex: 'name',
+        title: 'Название',
+      },
+      {
+        key: 'sum',
+        dataIndex: 'sum',
+        title: 'Сумма',
+      },
+      {
+        key: 'isIncome',
+        dataIndex: 'isIncome',
+        title: 'Доход',
+        render: (value: boolean) => <Checkbox checked={value} />
+      },
+      {
+        key: 'date',
+        dataIndex: 'date',
+        title: 'Дата'
+      }
+    ]
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [note])
 
   return note ? (
     <div className="note-view">
@@ -56,12 +83,19 @@ export default function NoteView() {
 
       <Text>{note.text}</Text>
 
+      <Table
+        columns={columns}
+        dataSource={note.singularFinancialOperations}
+        pagination={false}
+        className="note-view__table"
+      />
+
       <Flex justify="flex-end" align="center" gap={8}>
         <Tooltip title="Редактировать">
-          <Button icon={<IconPencil />} onClick={editNote} />
+          <Button icon={<IconPencil />} onClick={editNote} type="text" size="large" />
         </Tooltip>
         <Tooltip title="Удалить">
-          <Button icon={<IconTrash />} onClick={deleteNote} />
+          <Button icon={<IconTrash />} onClick={deleteNote} type="text" size="large" />
         </Tooltip>
         {contextHolder}
       </Flex>

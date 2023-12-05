@@ -89,12 +89,83 @@ export interface DateRangeDto {
   end: string;
 }
 
-export interface NoteIdDto {
+export interface IdDto {
   /**
-   * ID заметки
+   * ID
    * @example 1
    */
   id: number;
+}
+
+export interface SingularFinancialOperation {
+  /**
+   * ID записи
+   * @example "1"
+   */
+  id: number;
+  /**
+   * Сумма
+   * @example "1000"
+   */
+  sum: number;
+  /**
+   * Доход/расход
+   * @example "true"
+   */
+  isIncome: boolean;
+  /**
+   * Дата
+   * @example "YYYY-MM-DD"
+   */
+  date: string;
+  /**
+   * Название
+   * @example "Стипа)))"
+   */
+  name: string;
+  /**
+   * ID пользователя
+   * @example "1"
+   */
+  userId: number;
+  /**
+   * ID заметки
+   * @example "1"
+   */
+  noteId: number;
+}
+
+export interface NoteViewDto {
+  /**
+   * ID заметки
+   * @example "1"
+   */
+  id: number;
+  /**
+   * Заголовок заметки
+   * @example "Заголовок"
+   */
+  title: string;
+  /**
+   * Дата заметки
+   * @example "yyyy-MM-dd"
+   */
+  date: string;
+  /**
+   * Текст заметки
+   * @example "Текст"
+   */
+  text: string;
+  /**
+   * Разовые единичные операции
+   * @example {}
+   */
+  singularFinancialOperations: SingularFinancialOperation[];
+  /**
+   * ID пользователя
+   * @example "1"
+   */
+  userId: number;
 }
 
 export interface EditNoteDto {
@@ -141,39 +212,11 @@ export interface AddSingularFinancialOperationDto {
    * @example "Стипа)))"
    */
   name: string;
-}
-
-export interface SingularFinancialOperation {
   /**
-   * ID записи
-   * @example "1"
+   * ID заметки
+   * @example 1
    */
-  id: number;
-  /**
-   * Сумма
-   * @example "1000"
-   */
-  sum: number;
-  /**
-   * Доход/расход
-   * @example "true"
-   */
-  isIncome: boolean;
-  /**
-   * Дата
-   * @example "1"
-   */
-  date: number;
-  /**
-   * Название
-   * @example "Стипа)))"
-   */
-  name: string;
-  /**
-   * ID пользователя
-   * @example "1"
-   */
-  userId: number;
+  noteId?: number;
 }
 
 export interface AddRegularFinancialOperationDto {
@@ -671,14 +714,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags Notes
-     * @name GetNoteById
+     * @name ViewNote
      * @summary Вернуть заметку по ID
-     * @request POST:/notes/get-note-by-id
+     * @request POST:/notes/view-note
      * @secure
      */
-    getNoteById: (data: NoteIdDto, params: RequestParams = {}) =>
-      this.request<Note, any>({
-        path: `/notes/get-note-by-id`,
+    viewNote: (data: IdDto, params: RequestParams = {}) =>
+      this.request<NoteViewDto, any>({
+        path: `/notes/view-note`,
         method: "POST",
         body: data,
         secure: true,
@@ -696,7 +739,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/notes/delete-note-by-id
      * @secure
      */
-    deleteNoteById: (data: NoteIdDto, params: RequestParams = {}) =>
+    deleteNoteById: (data: IdDto, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/notes/delete-note-by-id`,
         method: "POST",
@@ -837,6 +880,46 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getAllOperationsInMonth: (data: GetMonthOperations, params: RequestParams = {}) =>
       this.request<OperationsListItem[], any>({
         path: `/financial-operations/get-operations-in-month`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Financial operations
+     * @name GetOperationsByNote
+     * @summary Фин. операции по заметке
+     * @request POST:/financial-operations/get-operations-by-note
+     * @secure
+     */
+    getOperationsByNote: (data: IdDto, params: RequestParams = {}) =>
+      this.request<SingularFinancialOperation[], any>({
+        path: `/financial-operations/get-operations-by-note`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Financial operations
+     * @name DeleteSingularOperation
+     * @summary Удалить разовую операцию
+     * @request POST:/financial-operations/delete-singular-operation
+     * @secure
+     */
+    deleteSingularOperation: (data: IdDto, params: RequestParams = {}) =>
+      this.request<boolean, any>({
+        path: `/financial-operations/delete-singular-operation`,
         method: "POST",
         body: data,
         secure: true,

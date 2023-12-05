@@ -1,89 +1,73 @@
-import { DatePicker, Form, Input, FormProps, Button, Typography } from "antd";
-import useApiClient from "../../../api/useApiClient";
-import { EditNoteDto } from "../../../api/Api";
+import { Typography, Tabs, TabsProps } from "antd";
 import './NoteForm.scss'
-import { validateMessages } from "../../../shared/helpers/form-helpers";
-import useMessage from "../../../shared/hoos/useMessage";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { DateToString, responseDateFormatter } from "../../../shared/helpers/date-helpers";
-
-const { TextArea } = Input
+import { useMemo, useReducer } from "react";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import NoteFormMain from "./NoteFormMain/NoteFormMain";
+import NoteFormOperations from "./NoteFormOperations/NoteFormOperations";
+import { NoteFormReducer, NoteFormState, noteFormReducer } from "./NoteFormReducer";
 
 const { Title } = Typography
 
+export type FormMode = 'add' | 'edit'
+
 type Props = {
-  mode: 'add' | 'edit'
+  mode: FormMode
 }
-
-enum NoteNames {
-  id = 'id',
-  title = 'title',
-  date = 'date',
-  text = 'text'
-}
-
-type NoteFormFields = DateToString<EditNoteDto>
 
 export default function NoteForm({ mode }: Props) {
-  const { id } = useParams()
+  const navigate = useNavigate()
 
-  const api = useApiClient()
+  const [formReducer, dispatch] = useReducer<NoteFormReducer>(noteFormReducer, { 
+    refresher: 0,
+    id: 0,
+  } as NoteFormState)
 
-  const message = useMessage()
+  const items = useMemo<TabsProps['items']>(() => {
+    return [
+      {
+        key: '1',
+        label: 'Заметка',
+        children: <NoteFormMain mode={mode} onSubmit={id => dispatch({ type: 'setId', payload: id })} />
+      },
+      {
+        key: '2',
+        label: 'Финансы',
+        children: (
+          <NoteFormOperations
+            mode={mode}
+            formState={formReducer}
+          />
+        )
+      }
+    ]
+  }, [mode, formReducer])
 
-  const [form] = Form.useForm<NoteFormFields>()
-
-  useEffect(() => {
-    if (mode === 'edit' && id) {
-      api.notes.getNoteById({ id: +id })
-        .then(responseDateFormatter)
-        .then(res => form.setFieldsValue(res.data))
-    }
-  }, [mode, id, api, form])
-
-  const onFinish: FormProps<NoteFormFields>['onFinish'] = async (values) => {
-    if (mode === 'add') {
-      await api.notes.createNote(values)
-      form.resetFields()
-      message.success('Заметка добавлена')
-    }
-
-    if (mode === 'edit') {
-      await api.notes.editNote(values)
-      message.success('Заметка обновлена')
-    }
-  }
+  const routes = useMemo(() => {
+    return [
+      {
+        key: '1',
+        route: 'main'
+      },
+      {
+        key: '2',
+        route: 'operations'
+      }
+    ]
+  }, [])
 
   return (
-    <Form<NoteFormFields>
-      form={form}
-      layout="vertical"
-      className="note-form"
-      onFinish={onFinish}
-      validateMessages={validateMessages}
-    >
+    <div className="note-form">
       <Title level={2} className="note-form__title">
         {mode === 'add' ? 'Создать заметку' : 'Редактировать заметку'}
       </Title>
-
-      <Form.Item name={NoteNames.id} hidden>
-        <Input />
-      </Form.Item>
-
-      <Form.Item name={NoteNames.title} label="Заголовок" rules={[{ required: true }]}>
-        <Input className="note-form__title-input" />
-      </Form.Item>
-
-      <Form.Item name={NoteNames.date} label="Дата" rules={[{ required: true }]}>
-        <DatePicker />
-      </Form.Item>
-
-      <Form.Item name={NoteNames.text} label="Текст" rules={[{ required: true }]}>
-        <TextArea rows={4} autoSize={false} />
-      </Form.Item>
-
-      <Button type="primary" htmlType="submit">Создать</Button>
-    </Form>
+      <Routes>
+        <Route path="/" element={<Navigate to={`./${routes[0].route}`} />} />
+        {routes.map(({ route, key }) => (
+          <Route key={key} path={route} element={
+            <Tabs items={items} activeKey={key} onChange={(key) => navigate(`./${routes.find(r => r.key === key)?.route}`)} />
+          } />
+        ))}
+      </Routes>
+    </div>
   )
 }

@@ -7,9 +7,9 @@ export default function NotesPage() {
   return (
     <Routes>
       <Route path="/" element={<NotesCalendar />} />
-      <Route path="/edit/:id" element={<NoteForm mode="edit" />} />
-      <Route path="/add" element={<NoteForm mode="add" />} />
-      <Route path="/view/:id" element={<NoteView />} />
+      <Route path="/edit/:id/*" element={<NoteForm mode="edit" />} />
+      <Route path="/add/*" element={<NoteForm mode="add" />} />
+      <Route path="/view/:id/*" element={<NoteView />} />
     </Routes>
   )
 }

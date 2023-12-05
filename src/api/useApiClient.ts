@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { MessageContext } from "../App";
 import { MessageInstance } from "antd/es/message/interface";
 
-const apiHost = import.meta.env.VITE_API_HOST || 'http://localhost:500'
+const apiHost = import.meta.env.VITE_API_HOST || 'http://localhost:5000'
 
 export default function useApiClient() {
   const navigate = useNavigate()
