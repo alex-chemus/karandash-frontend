@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "api:generate": "swagger-typescript-api -p http://localhost:5000/docs-json -o ./src/api -n Api.ts"
+    "api:generate": "swagger-typescript-api -p http://localhost:5000/docs-json -o ./src/api -n Api.ts",
+    "test:e2e": "npx playwright test --ui"
   },
   "dependencies": {
     "@tabler/icons-react": "^2.40.0",
@@ -26,6 +27,8 @@
     "swagger-typescript-api": "^13.0.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.10.3",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",

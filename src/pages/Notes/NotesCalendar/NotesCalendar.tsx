@@ -59,7 +59,7 @@ export default function NotesPage() {
 
   return (
     <>
-      <Button icon={<IconPlus />} onClick={() => navigate('/notes/add')} />
+      <Button icon={<IconPlus />} onClick={() => navigate('/notes/add')} data-testid="notes-calendar-page-add-button" />
       <div className="notes-calendar-page">
         <Calendar
           mode="month"

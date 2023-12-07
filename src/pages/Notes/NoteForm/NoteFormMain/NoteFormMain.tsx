@@ -36,12 +36,6 @@ export default function NoteFormMain({ mode, onSubmit }: Props) {
   const [form] = Form.useForm<NoteFormFields>()
 
   useEffect(() => {
-    return () => {
-      console.log('destroy NoteFormMain')
-    }
-  }, [])
-
-  useEffect(() => {
     if (mode === 'edit' && id) {
       api.notes.viewNote({ id: +id })
         .then(responseDateFormatter)
