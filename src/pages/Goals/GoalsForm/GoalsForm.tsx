@@ -5,6 +5,7 @@ import * as dayjs from 'dayjs'
 import { AddGoalDto } from "../../../api/Api"
 import { validateMessages } from "../../../shared/helpers/form-helpers"
 import useMessage from "../../../shared/hoos/useMessage"
+import { useState } from "react"
 
 const goalNames = {
   id: 'id',
@@ -28,6 +29,8 @@ export default function GoalsForm() {
 
   const [form] = Form.useForm()
 
+  const [touched, setTouched] = useState(false)
+
   const onFinish: FormProps['onFinish'] = async (values: AddGoalDto) => {
     await api.goals.addGoal(values)
 
@@ -43,6 +46,7 @@ export default function GoalsForm() {
       onFinish={onFinish}
       initialValues={initialValues}
       validateMessages={validateMessages}
+      onValuesChange={() => setTouched(true)}
     >
       <Title level={2} className="note-form__title">
         Добавить цель
@@ -64,7 +68,7 @@ export default function GoalsForm() {
         <InputNumber />
       </Form.Item>
 
-      <Button type="primary" htmlType="submit">Добавить</Button>
+      <Button type="primary" htmlType="submit" disabled={!touched}>Добавить</Button>
     </Form>
   )
 }

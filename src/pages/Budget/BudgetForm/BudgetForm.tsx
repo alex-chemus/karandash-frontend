@@ -4,6 +4,7 @@ import ComboBox from "../../../shared/components/ComboBox/ComboBox"
 import './BudgetForm.scss'
 import { validateMessages } from "../../../shared/helpers/form-helpers"
 import useMessage from "../../../shared/hoos/useMessage"
+import { useState } from "react"
 
 const budgetNames = {
   id: 'id',
@@ -43,6 +44,8 @@ export default function BudgetForm({ operation }: Props) {
 
   const [form] = Form.useForm()
 
+  const [touched, setTouched] = useState(false)
+
   const onFinish: FormProps['onFinish'] = (values) => {
     if (operation === 'singular') {
       api.financialOperations.addSingularFinancialOperation({ ...values, date: values.date.format('YYYY-MM-DD') })
@@ -62,6 +65,7 @@ export default function BudgetForm({ operation }: Props) {
       onFinish={onFinish}
       initialValues={operation === 'singular' ? initialSingularValues : initialRegularValues}
       validateMessages={validateMessages}
+      onValuesChange={() => setTouched(true)}
     >
       <Title level={2} className="note-form__title">
         Добавить {operation === 'singular' ? 'разовую' : 'регулярную'} операцию
@@ -98,7 +102,7 @@ export default function BudgetForm({ operation }: Props) {
         </Form.Item>
       )}
 
-      <Button type="primary" htmlType="submit">Добавить</Button>
+      <Button type="primary" htmlType="submit" disabled={!touched}>Добавить</Button>
     </Form>
   )
 }

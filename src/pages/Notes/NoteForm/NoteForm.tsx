@@ -17,9 +17,10 @@ type Props = {
 export default function NoteForm({ mode }: Props) {
   const navigate = useNavigate()
 
-  const [formReducer, dispatch] = useReducer<NoteFormReducer>(noteFormReducer, { 
+  const [formState, dispatch] = useReducer<NoteFormReducer>(noteFormReducer, { 
     refresher: 0,
     id: 0,
+    touched: false,
   } as NoteFormState)
 
   const items = useMemo<TabsProps['items']>(() => {
@@ -27,7 +28,14 @@ export default function NoteForm({ mode }: Props) {
       {
         key: '1',
         label: 'Заметка',
-        children: <NoteFormMain mode={mode} onSubmit={id => dispatch({ type: 'setId', payload: id })} />
+        children: (
+          <NoteFormMain
+            mode={mode}
+            onSubmit={id => dispatch({ type: 'setId', payload: id })}
+            onTouch={() => dispatch({ type: 'touch' })}
+            touched={formState.touched}
+          />
+        )
       },
       {
         key: '2',
@@ -35,12 +43,13 @@ export default function NoteForm({ mode }: Props) {
         children: (
           <NoteFormOperations
             mode={mode}
-            formState={formReducer}
+            formState={formState}
+            onTouch={() => dispatch({ type: 'touch' })}
           />
         )
       }
     ]
-  }, [mode, formReducer])
+  }, [mode, formState])
 
   const routes = useMemo(() => {
     return [

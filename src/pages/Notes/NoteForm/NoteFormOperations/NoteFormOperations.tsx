@@ -15,7 +15,8 @@ const { Title } = Typography
 
 type Props = {
   mode: FormMode,
-  formState: NoteFormState
+  formState: NoteFormState,
+  onTouch?: () => void,
 }
 
 enum OperationNames {
@@ -25,7 +26,7 @@ enum OperationNames {
   date = 'date'
 }
 
-export default function NoteFormOperations({ mode, formState }: Props) {
+export default function NoteFormOperations({ mode, formState, onTouch }: Props) {
   const api = useApiClient()
 
   const { id } = useParams()
@@ -119,6 +120,7 @@ export default function NoteFormOperations({ mode, formState }: Props) {
         className="note-form-operations"
         onFinish={values => dispatch({ type: 'add', payload: values })}
         validateMessages={validateMessages}
+        onValuesChange={onTouch}
       >
         <Title level={4} className="note-form-operations__form-title">Добавить разовую операцию</Title>
 

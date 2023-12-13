@@ -2,7 +2,8 @@ import { Reducer } from "react"
 
 export type NoteFormState = {
   id: number,
-  refresher: number
+  refresher: number,
+  touched: boolean,
 }
 
 type SetIdAction = {
@@ -14,7 +15,11 @@ type RefreshAction = {
   type: 'refresh'
 }
 
-type Action = SetIdAction | RefreshAction
+type TouchAction = {
+  type: 'touch'
+}
+
+type Action = SetIdAction | RefreshAction | TouchAction
 
 export type NoteFormReducer = Reducer<NoteFormState, Action>
 
@@ -24,6 +29,8 @@ export const noteFormReducer = (state: NoteFormState, action: Action) => {
       return { ...state, id: action.payload, refresher: +state.refresher }
     case 'refresh':
       return { ...state, refresher: +state.refresher }
+    case 'touch':
+      return { ...state, touched: true }
     default:
       return state
   }

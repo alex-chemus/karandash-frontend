@@ -23,10 +23,12 @@ enum NoteNames {
 
 type Props = {
   mode: FormMode,
-  onSubmit?: (id: number) => void
+  touched?: boolean,
+  onSubmit?: (id: number) => void,
+  onTouch?: () => void,
 }
 
-export default function NoteFormMain({ mode, onSubmit }: Props) {
+export default function NoteFormMain({ mode, touched = true, onSubmit, onTouch }: Props) {
   const api = useApiClient()
 
   const message = useMessage()
@@ -66,6 +68,7 @@ export default function NoteFormMain({ mode, onSubmit }: Props) {
       className="note-form-main"
       onFinish={onFinish}
       validateMessages={validateMessages}
+      onValuesChange={onTouch}
     >
       <Form.Item name={NoteNames.id} hidden>
         <Input />
@@ -83,7 +86,7 @@ export default function NoteFormMain({ mode, onSubmit }: Props) {
         <TextArea rows={4} autoSize={false} />
       </Form.Item>
 
-      <Button type="primary" htmlType="submit">Создать</Button>
+      <Button type="primary" htmlType="submit" disabled={!touched}>Создать</Button>
     </Form>
   )
 }
