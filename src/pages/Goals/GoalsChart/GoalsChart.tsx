@@ -87,6 +87,7 @@ export default function GoalsChart() {
                 stroke={themeStore.theme.token?.colorTextBase}
                 label={goal.name}
                 dot={props => getDot(props, goal.name)}
+                isAnimationActive={false}
               />
             )
           })}
@@ -96,6 +97,7 @@ export default function GoalsChart() {
               fill={themeStore.theme.token?.colorPrimary}
               stroke={themeStore.theme.token?.colorPrimary}
               dot={props => getDot(props, 'Финансы')}
+              isAnimationActive={false}
             />
           )}
         </ComposedChart>

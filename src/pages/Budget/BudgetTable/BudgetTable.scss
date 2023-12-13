@@ -27,6 +27,15 @@
 }
 
 .budget-table-page__table {
+  .ant-table-tbody {
+    background-color: var(--color-bg-on-surface);
+  }
+
+  .ant-table-thead .ant-table-cell {
+    background: var(--color-bg-on-surface);
+    color: var(--color-accent);
+  }
+
   .ant-table-row-level-0 {
     cursor: pointer;
   }

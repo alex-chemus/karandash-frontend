@@ -15,7 +15,7 @@
 }
 
 .notes-calendar-page__sidebar {
-  background-color: var(--color-bg-secondary);
+  background-color: var(--color-bg-on-surface);
   border-radius: 8px;
   padding: 32px;
   color: var(--color-text-primary);
@@ -39,12 +39,11 @@
   .ant-collapse-header {
     border-radius: var(--radius-lg) !important;
     font-weight: 500;
-    // border: 1px solid var(--color-dark-primary);
     box-shadow: 0 0 3px 0 rgba(0 0 0 / .25);
   }
 
   .ant-collapse-header:is(:hover, :active) {
-    background-color: var(--color-bg-primary);
+    background-color: var(--color-bg-surface);
   }
 
   .ant-collapse-expand-icon {
@@ -55,19 +54,19 @@
     padding-top: var(--size-lg) !important;
     margin-top: calc(var(--size-xs) * -1);
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    border: 2px solid var(--color-bg-primary);
+    border: 2px solid var(--color-bg-surface);
     border-top: none;
     display: flex;
     justify-content: space-between;
     gap: var(--size-xs);
-    background-color: var(--color-bg-primary);
+    background-color: var(--color-bg-surface);
   }
 }
 
 .notes-calendar-page__note-item.ant-collapse-item-active {
   .ant-collapse-header {
-    background-color: var(--color-bg-primary);
-    border-bottom: 1px solid var(--color-bg-secondary);
+    background-color: var(--color-bg-surface);
+    border-bottom: 1px solid var(--color-bg-on-surface);
     color: var(--color-accent);
     box-shadow: none;
   }
@@ -79,6 +78,6 @@
   box-shadow: none;
 
   &:is(:hover, :focus, :active) {
-    background-color: var(--color-bg-primary);
+    background-color: var(--color-bg-surface);
   }
 }
