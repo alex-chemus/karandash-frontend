@@ -56,7 +56,7 @@ export default function GoalsForm() {
         <Input />
       </Form.Item>
 
-      <Form.Item name={goalNames.name} label="Название" rules={[{ required: true }]}>
+      <Form.Item name={goalNames.name} label="Название" rules={[{ required: true }, { max: 255 }]}>
         <Input />
       </Form.Item>
 

@@ -5,6 +5,10 @@
   width: 800px;
   margin: 40px auto 0;
 
+  &__title {
+    margin-bottom: var(--size-xl) !important;
+  }
+
   .ant-input-number {
     width: 100%;
   }

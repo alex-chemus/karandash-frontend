@@ -74,7 +74,7 @@ export default function NoteFormMain({ mode, touched = true, onSubmit, onTouch }
         <Input />
       </Form.Item>
 
-      <Form.Item name={NoteNames.title} label="Заголовок" rules={[{ required: true }]}>
+      <Form.Item name={NoteNames.title} label="Заголовок" rules={[{ required: true}, { max: 255 }]}>
         <Input className="note-form__title-input" />
       </Form.Item>
 
@@ -82,7 +82,7 @@ export default function NoteFormMain({ mode, touched = true, onSubmit, onTouch }
         <DatePicker />
       </Form.Item>
 
-      <Form.Item name={NoteNames.text} label="Текст" rules={[{ required: true }]}>
+      <Form.Item name={NoteNames.text} label="Текст" rules={[{ required: true}, { max: 255 }]}>
         <TextArea rows={4} autoSize={false} />
       </Form.Item>
 

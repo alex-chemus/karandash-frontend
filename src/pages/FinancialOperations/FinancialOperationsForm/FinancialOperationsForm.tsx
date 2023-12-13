@@ -75,7 +75,7 @@ export default function FinancialOperationsForm({ operation }: Props) {
         <Input />
       </Form.Item>
 
-      <Form.Item name={names.name} label="Название" rules={[{ required: true }]}>
+      <Form.Item name={names.name} label="Название" rules={[{ required: true}, { max: 255 }]}>
         <Input />
       </Form.Item>
 

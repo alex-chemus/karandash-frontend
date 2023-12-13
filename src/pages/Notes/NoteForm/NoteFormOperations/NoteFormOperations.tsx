@@ -124,7 +124,7 @@ export default function NoteFormOperations({ mode, formState, onTouch }: Props) 
       >
         <Title level={4} className="note-form-operations__form-title">Добавить разовую операцию</Title>
 
-        <Form.Item name={OperationNames.name} label="Название" rules={[{ required: true }]}>
+        <Form.Item name={OperationNames.name} label="Название" rules={[{ required: true}, { max: 255 }]}>
           <Input />
         </Form.Item>
 
