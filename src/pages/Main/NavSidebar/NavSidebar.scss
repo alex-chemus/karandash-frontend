@@ -19,13 +19,9 @@
   text-align: left;
   padding: 0 65px;
 
-  &.ant-btn-default {
-    border-color: transparent;
-    box-shadow: none;
-  }
-
-  &.ant-btn-default:hover {
-    border-color: transparent !important;
+  &.ant-btn.ant-btn-text:hover {
+    background-color: transparent;
+    color: var(--color-accent);
   }
 
   &.ant-btn-primary {
@@ -33,8 +29,16 @@
     color: var(--color-text-primary);
   }
 
-  &.ant-btn-primary:hover {
-    color: var(--color-accent) !important;
-    background-color: var(--color-bg-on-surface) !important;
+  &.ant-btn-primary:hover:not(.nav-sidebar-button_logout) {
+    color: var(--color-accent);
+    background-color: var(--color-bg-on-surface);
+  }
+
+  &_logout {
+    margin-top: auto;
+  }
+
+  &_logout:not(:hover) {
+    background-color: transparent !important;
   }
 }

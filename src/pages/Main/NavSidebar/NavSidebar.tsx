@@ -1,8 +1,9 @@
-import { IconBusinessplan, IconInfoCircle, IconNotes, IconTargetArrow } from "@tabler/icons-react"
+import { IconBusinessplan, IconInfoCircle, IconLogout2, IconNotes, IconTargetArrow } from "@tabler/icons-react"
 import { Button, Space } from "antd"
-import { ReactNode, useMemo } from "react"
+import { ReactNode, useEffect, useMemo } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import './NavSidebar.scss'
+import useModal from "../../../shared/components/Modal/useModal"
 
 type NavTab = {
   icon: ReactNode,
@@ -19,6 +20,8 @@ export default function NavSidebar({ children }: Props) {
   const location = useLocation()
 
   const navigate = useNavigate()
+
+  const { modal, contextHolder } = useModal()
 
   const navTabs = useMemo<NavTab[]>(() => [
     {
@@ -47,6 +50,22 @@ export default function NavSidebar({ children }: Props) {
     }
   ], [location])
 
+  useEffect(() => {
+    if (navTabs.some(tab => tab.active)) {
+      document.title = navTabs.find(tab => tab.active)!.title
+    }
+  }, [navTabs])
+
+  const handleConfirmLogout = () => {
+    modal.confirm({
+      title: "Вы уверены, что хотите выйти?",
+      onOk: () => {
+        localStorage.removeItem("token")
+        navigate("/login")
+      }
+    })
+  }
+
   return (
     <div className="nav-sidebar-wrapper">
       <div className="nav-sidebar">
@@ -55,7 +74,7 @@ export default function NavSidebar({ children }: Props) {
             className="nav-sidebar-button"
             onClick={() => navigate(tab.linkTo)}
             key={tab.title}
-            type={tab.active ? 'primary' : 'default'}
+            type={tab.active ? 'primary' : 'text'}
           >
             <Space>
               {tab.icon}
@@ -63,6 +82,18 @@ export default function NavSidebar({ children }: Props) {
             </Space>
           </Button>
         ))}
+
+        <Button
+          className="nav-sidebar-button nav-sidebar-button_logout"
+          type="primary"
+          onClick={handleConfirmLogout}
+        >
+          {contextHolder}
+          <Space>
+            <IconLogout2 />
+            Выйти
+          </Space>
+        </Button>
       </div>
       <div className="nav-sidebar-main-content">
         {children}
