@@ -81,7 +81,7 @@ test('Notes-to-finances integration', async ({ page }) => {
 
   // проверка, что добавленная операция повлияла на итог фин. операций
   await page.getByRole('button', { name: 'Финансы' }).click();
-  await page.waitForURL(`${host}/budget`, { waitUntil: 'networkidle' })
+  await page.waitForURL(`${host}/financial-operations`, { waitUntil: 'networkidle' })
   await page.waitForFunction(() => !!document.querySelector('.ant-table'))
   const cell = await page.getByRole('cell', { name: '1000' }).first();
   expect(cell).toBeVisible()

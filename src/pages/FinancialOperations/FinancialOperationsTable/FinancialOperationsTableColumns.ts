@@ -2,14 +2,14 @@ import { ReactNode } from "react"
 import { MonthSummaryDto } from "../../../api/Api"
 import { getMonthByNumber } from "../../../shared/helpers/months-helpers"
 
-type BudgetTableColumn = {
+type FinancialOperationsTableColumn = {
   dataIndex: keyof MonthSummaryDto,
   key: keyof MonthSummaryDto,
   title: string,
   render?: (value: number, record: MonthSummaryDto, index: number) => ReactNode
 }
 
-export const budgetTableColumns: BudgetTableColumn[] = [
+export const financialOperationsTableColumns: FinancialOperationsTableColumn[] = [
   {
     key: 'month',
     dataIndex: 'month',

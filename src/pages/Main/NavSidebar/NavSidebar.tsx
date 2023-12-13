@@ -30,8 +30,8 @@ export default function NavSidebar({ children }: Props) {
     {
       icon: <IconBusinessplan />,
       title: 'Финансы',
-      active: location.pathname === '/budget',
-      linkTo: '/budget'
+      active: location.pathname === '/financial-operations',
+      linkTo: '/financial-operations'
     },
     {
       icon: <IconTargetArrow />,

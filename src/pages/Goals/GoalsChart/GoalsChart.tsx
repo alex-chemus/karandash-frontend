@@ -31,7 +31,7 @@ export default function GoalsChart() {
 
   const [goals, setGoals] = useState<Goal[] | null>(null)
 
-  const [aggregatedBudget, setAggregatedBudget] = useState<MonthSummaryDto[] | null>(null)
+  const [aggregatedOperations, setAggregatedOperations] = useState<MonthSummaryDto[] | null>(null)
 
   useEffect(() => {
     const year = dayjs().year()
@@ -40,17 +40,17 @@ export default function GoalsChart() {
       .then(res => setGoals(res.data))
 
     api.financialOperations.getAggregatedYearSummary({ year })
-      .then(res => setAggregatedBudget(res.data))
+      .then(res => setAggregatedOperations(res.data))
     }, []) //eslint-disable-line react-hooks/exhaustive-deps
 
   const chartData = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const data: any = []
 
-    if (goals === null || aggregatedBudget === null) return null
+    if (goals === null || aggregatedOperations === null) return null
 
     months.forEach((month, i) => {
-      const monthSummary = aggregatedBudget.find(item => item.month === i+1)!
+      const monthSummary = aggregatedOperations.find(item => item.month === i+1)!
 
       data.push({
         name: month,
@@ -63,7 +63,7 @@ export default function GoalsChart() {
     })
 
     return data
-  }, [goals, aggregatedBudget])
+  }, [goals, aggregatedOperations])
 
   return (
     <Flex gap={Sizes.lg} vertical={true} className="goals-chart">
@@ -91,7 +91,7 @@ export default function GoalsChart() {
               />
             )
           })}
-          {aggregatedBudget && (
+          {aggregatedOperations && (
             <Area
               dataKey={'Финансы'}
               fill={themeStore.theme.token?.colorPrimary}

@@ -1,4 +1,4 @@
-.budget-table-page {
+.financial-operations-table-page {
   &__table-wrapper {
     width: 70%;
     margin: 0 auto;
@@ -26,7 +26,7 @@
   }
 }
 
-.budget-table-page__table {
+.financial-operations-table-page__table {
   .ant-table-tbody {
     background-color: var(--color-bg-on-surface);
   }
