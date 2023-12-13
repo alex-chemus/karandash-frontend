@@ -4,6 +4,7 @@ import './AuthPage.scss'
 import useApiClient from "../../api/useApiClient";
 import userStore from "../../stores/UserStore/UserStore";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const { Title } = Typography
 
@@ -22,6 +23,11 @@ function AuthComponent(props: Props) {
   const [form] = Form.useForm()
 
   const api = useApiClient()
+
+  useEffect(() => {
+    if (props.authAction === 'login') document.title = 'Войти'
+    if (props.authAction === 'register') document.title = 'Зарегистрироваться'
+  }, [props.authAction])
 
   const register = async (): Promise<string> => {
     const response = await api.auth.register({
