@@ -83,12 +83,14 @@ export default function NoteView() {
 
       <Text>{note.text}</Text>
 
-      <Table
-        columns={columns}
-        dataSource={note.singularFinancialOperations}
-        pagination={false}
-        className="note-view__table"
-      />
+      {note.singularFinancialOperations.length > 0 && (
+        <Table
+          columns={columns}
+          dataSource={note.singularFinancialOperations}
+          pagination={false}
+          className="note-view__table"
+        />
+      )}
 
       <Flex justify="flex-end" align="center" gap={8}>
         <Tooltip title="Редактировать">

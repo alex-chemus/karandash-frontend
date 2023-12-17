@@ -2,7 +2,7 @@ import { IconBusinessplan, IconInfoCircle, IconLogout2, IconNotes, IconTargetArr
 import { Button, Space } from "antd"
 import { ReactNode, useEffect, useMemo } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import './NavSidebar.scss'
+import './MainPageTabs.scss'
 import useModal from "../../../shared/components/Modal/useModal"
 
 type NavTab = {
@@ -16,7 +16,7 @@ type Props = {
   children: ReactNode
 }
 
-export default function NavSidebar({ children }: Props) {
+export default function MainPageTabs({ children }: Props) {
   const location = useLocation()
 
   const navigate = useNavigate()
@@ -67,11 +67,11 @@ export default function NavSidebar({ children }: Props) {
   }
 
   return (
-    <div className="nav-sidebar-wrapper">
-      <div className="nav-sidebar">
+    <div className="main-page-wrapper">
+      <div className="main-page-tabs">
         {navTabs.map(tab => (
           <Button
-            className="nav-sidebar-button"
+            className="main-page-tabs__button"
             onClick={() => navigate(tab.linkTo)}
             key={tab.title}
             type={tab.active ? 'primary' : 'text'}
@@ -84,7 +84,7 @@ export default function NavSidebar({ children }: Props) {
         ))}
 
         <Button
-          className="nav-sidebar-button nav-sidebar-button_logout"
+          className="main-page-tabs__button main-page-tabs__button_logout"
           type="primary"
           onClick={handleConfirmLogout}
         >

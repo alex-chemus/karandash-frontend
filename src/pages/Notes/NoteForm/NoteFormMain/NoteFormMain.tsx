@@ -86,7 +86,9 @@ export default function NoteFormMain({ mode, touched = true, onSubmit, onTouch }
         <TextArea rows={4} autoSize={false} />
       </Form.Item>
 
-      <Button type="primary" htmlType="submit" disabled={!touched}>Создать</Button>
+      <Button type="primary" htmlType="submit" disabled={!touched}>
+        {mode === 'add' ? 'Создать' : 'Сохранить'}
+      </Button>
     </Form>
   )
 }
